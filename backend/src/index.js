@@ -38,6 +38,18 @@ app.get('/reportpdf/vuelos', async (req, res, next) => {
     }
 })
 
+app.get('/vuelos', async (req, res, next) => {
+    try {
+        const vuelos = await Vuelo.find().populate('avion')
+                                        .populate('piloto')
+                                        .populate('miembros')
+        res.send(vuelos)
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
 app.use((
   err,
   req,
