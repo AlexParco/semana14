@@ -25,7 +25,35 @@ app.get('/reportpdf/vuelos', async (req, res, next) => {
                 obj.avion.type, obj.piloto.name, obj.miembros.length
             ])
         })
-        const nombreArchivo = 'Vuelos.pdf'; // Nombre que deseas asignar al archivo PDF
+
+        // miembros
+        let tempMiembro = []
+        vuelos.forEach(obj => {
+            tempMiembro = obj.miembros.map( e => [
+                obj.flightNumber, e.code, e.name
+            ])
+        })
+        doc.autoTable({
+            head: [['Numero de Vuelo', 'Code', 'Name']],
+            body: tempMiembro
+        })
+
+        //avion
+        doc.autoTable({
+            head: [['Numero de Vuelo', 'Code', 'Tipo', 'Base de mantenimient']],
+            body: vuelos.map(obj => [
+                obj.flightNumber, obj.avion.code, obj.avion.type, obj.avion.maintenanceBase
+            ])
+        })
+
+        //piloto
+        doc.autoTable({
+            head: [['Numero de Vuelo', 'Code', 'name', 'Hora de vuelo']],
+            body: vuelos.map(obj => [
+                obj.flightNumber, obj.piloto.code, obj.piloto.type, obj.piloto.flightHours
+            ])
+        })
+        const nombreArchivo = 'Miembros.pdf'; 
 
         res.setHeader('Content-Disposition', `attachment; filename="${nombreArchivo}"`);
         res.setHeader('Content-Type', 'application/pdf');
@@ -49,6 +77,52 @@ app.get('/vuelos', async (req, res, next) => {
         next(error)
     }
 })
+
+app.post('/create/vuelo', async (req, res, next) => {
+    try {
+        const param = req.body  
+        const vuelos = await Vuelo.find(param)
+        res.send(vuelos)
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+app.post('/create/avion', async (req, res, next) => {
+    try {
+        const param = req.body  
+        const vuelos = await Avion.find(param)
+        res.send(vuelos)
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+app.post('/create/miembro', async (req, res, next) => {
+    try {
+        const param = req.body  
+        const vuelos = await Miembro.find(param)
+        res.send(vuelos)
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+app.post('/create/piloto', async (req, res, next) => {
+    try {
+        const param = req.body  
+        const vuelos = await Pilot.find(param)
+        res.send(vuelos)
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+
 
 app.use((
   err,
