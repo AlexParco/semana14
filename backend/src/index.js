@@ -4,7 +4,9 @@ const { createFlight, Pilot, Miembro, Avion, Vuelo} = require('./models/modelos'
 const { jsPDF } = require('jspdf')
 const moment = require('moment')
 require('jspdf-autotable');
+const cors = require('cors')
 
+app.use(cors())
 // createFlight()
 // rutas habilitadas
 // 'http://localhost:4000/reportpdf/vuelos'

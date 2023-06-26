@@ -1,0 +1,70 @@
+<app-navbar></app-navbar>
+<section class="content">
+<div class="container-fluid">
+    <div class="row m-t-sm">
+        <div class="col-md-15">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="col-md-12 col-sm-12" id="list_alumnos">
+                        <div class="panel panel-filled">
+                            <div class="panel-body">
+
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <h5 class="m-t-xs">Vuelos Registrados</h5>
+                                    </div>
+                                    <div class="col-sm-2 text-right">
+                                        <div class="panel-body buttons-margin ">
+                                            <a id="btnNuevo" class="btn btn-w-md btn-info"
+                                              (click)="exportarPDF()"
+                                              >Exportar a pdf</a>
+                                            <a id="btnNuevo" class="btn btn-w-md btn-info"
+                                              routerLink="/crear-productos">Nuevo Vuelo</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table *ngIf="listVuelos.length > 0" class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Origen</th>
+                                                <th>Destino</th>
+                                                <th>Hora</th>
+                                                <th>Avion</th>
+                                                <th>Piloto</th>
+                                                <th>Miembros</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="datos">
+                                            <tr *ngFor="let producto of listVuelos">
+                                                <td>{{ producto.flightNumber }}</td>
+                                                <td>{{ producto.origin}}</td>
+                                                <td>{{ producto.destination}}</td>
+                                                <!-- <td>{{ producto.vuelo}}</td> -->
+                                                <td>{{ producto.time }}</td>
+                                                <td>{{ producto.avion.name}}</td>
+                                                <td>{{ producto.piloto.name}}</td>
+                                                <td>{{ producto.miembros.length}}</td>
+                                                <td>
+                                                    <!-- <i (click)="eliminarProducto(producto._id)" style="font-size: 25px;" class="pe pe-7s-trash text-accent"></i>&nbsp;&nbsp; -->
+                                                    <i [routerLink]="['/editar-producto', producto._id]" style="font-size: 25px;" class="pe pe-7s-pen text-accent"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div class="text-right font-bold c-white y-value">
+                                    <div id="val_a">Total Vuelos: {{elementos}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
